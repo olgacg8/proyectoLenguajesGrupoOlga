@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Reglament oficial de La Porra del Mundial 2026. Consulta les normes d'inscripció, premis, fases, puntuació, desempats i regles de validesa." />
+  <meta name="keywords" content="porra, mundial 2026, reglament, futbol, mundial, normes" />
+  <meta property="og:title" content="La Porra del Mundial 2026 – Reglament Oficial" />
+  <meta property="og:description" content="Consulta totes les normes del joc de La Porra del Mundial 2026." />
+  <title>La Porra del Mundial 2026 – Reglament Oficial</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Navegació principal">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo" aria-label="Anar a l'inici">
+        <span class="nav-logo-icon">⚽</span>
+        <span class="nav-logo-text">Porra <strong>2026</strong></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Obrir menú" aria-expanded="false" aria-controls="navMenu">
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+      </button>
+      <ul class="nav-menu" id="navMenu" role="menubar">
+        <li role="none"><a href="#inscripcio" class="nav-link" role="menuitem">Inscripció</a></li>
+        <li role="none"><a href="#premis" class="nav-link" role="menuitem">Premis</a></li>
+        <li role="none"><a href="#fases" class="nav-link" role="menuitem">Fases</a></li>
+        <li role="none"><a href="#puntuacio" class="nav-link" role="menuitem">Puntuació</a></li>
+        <li role="none"><a href="#desempats" class="nav-link" role="menuitem">Desempats</a></li>
+        <li role="none"><a href="#validesa" class="nav-link" role="menuitem">Validesa</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero" id="hero" role="banner">
+    <div class="hero-bg-orbs" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Reglament Oficial
+      </div>
+      <h1 class="hero-title">
+        La Porra del<br/>
+        <span class="hero-title-highlight">Mundial 2026</span>
+      </h1>
+      <p class="hero-subtitle">
+        Consulta totes les normes del joc: inscripció, premis, fases, puntuació, desempats i molt més.
+        <strong>Benvingut al teu guia oficial!</strong>
+      </p>
+      <div class="hero-cta-group">
+        <a href="#inscripcio" class="btn btn-primary" id="ctaStart">
+          <span>Llegir el Reglament</span>
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+        <a href="#puntuacio" class="btn btn-outline" id="ctaPuntuacio">
+          <span>Sistema de Puntuació</span>
+        </a>
+      </div>
+      <div class="hero-stats" aria-label="Estadístiques del Mundial 2026">
+        <div class="stat-item">
+          <span class="stat-number">48</span>
+          <span class="stat-label">Equips</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-number">104</span>
+          <span class="stat-label">Partits</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Seus</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator" aria-hidden="true">
+      <div class="scroll-dot"></div>
+    </div>
+  </header>
+
+  <!-- Quick Navigation Cards -->
+  <section class="quick-nav" aria-label="Navegació ràpida">
+    <div class="container">
+      <div class="quick-nav-grid">
+        <a href="#inscripcio" class="qnav-card" id="qnavInscripcio" aria-label="Anar a Inscripció i Fons">
+          <div class="qnav-icon" aria-hidden="true">📋</div>
+          <h3 class="qnav-title">Inscripció</h3>
+          <p class="qnav-desc">Terminis i fons econòmic</p>
+        </a>
+        <a href="#premis" class="qnav-card" id="qnavPremis" aria-label="Anar a Estructura de Premis">
+          <div class="qnav-icon" aria-hidden="true">🏆</div>
+          <h3 class="qnav-title">Premis</h3>
+          <p class="qnav-desc">Distribució del premi</p>
+        </a>
+        <a href="#fases" class="qnav-card" id="qnavFases" aria-label="Anar a Fases del Joc">
+          <div class="qnav-icon" aria-hidden="true">🗓️</div>
+          <h3 class="qnav-title">Fases</h3>
+          <p class="qnav-desc">Estructura del torneig</p>
+        </a>
+        <a href="#puntuacio" class="qnav-card" id="qnavPuntuacio" aria-label="Anar a Sistema de Puntuació">
+          <div class="qnav-icon" aria-hidden="true">⭐</div>
+          <h3 class="qnav-title">Puntuació</h3>
+          <p class="qnav-desc">Com s'acumulen els punts</p>
+        </a>
+        <a href="#horeslimit" class="qnav-card" id="qnavHores" aria-label="Anar a Hores Límit">
+          <div class="qnav-icon" aria-hidden="true">⏰</div>
+          <h3 class="qnav-title">Hores Límit</h3>
+          <p class="qnav-desc">Terminis de la final</p>
+        </a>
+        <a href="#desempats" class="qnav-card" id="qnavDesempats" aria-label="Anar a Desempats">
+          <div class="qnav-icon" aria-hidden="true">⚖️</div>
+          <h3 class="qnav-title">Desempats</h3>
+          <p class="qnav-desc">Criteris de desempat</p>
+        </a>
+        <a href="#validesa" class="qnav-card" id="qnavValidesa" aria-label="Anar a Regles de Validesa">
+          <div class="qnav-icon" aria-hidden="true">✅</div>
+          <h3 class="qnav-title">Validesa</h3>
+          <p class="qnav-desc">Regles i condicions</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main id="main-content">
+
+    <!-- Section 1: Inscripció i Fons Econòmic -->
+    <section class="section" id="inscripcio" aria-labelledby="title-inscripcio">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-number" aria-hidden="true">01</div>
+          <div class="section-badge">Apartat 1</div>
+          <h2 class="section-title" id="title-inscripcio">Inscripció i Fons Econòmic</h2>
+          <p class="section-subtitle">Tot el que necessites saber per participar a la porra i com es constitueix el premi total.</p>
+        </div>
+        <div class="cards-grid">
+          <div class="info-card card-accent-blue">
+            <div class="card-icon" aria-hidden="true">📋</div>
+            <h3 class="card-title">Inscripció</h3>
+            <ul class="card-list">
+              <li>La participació és oberta a totes les persones que abonen la quota establerta.</li>
+              <li>Cada participant ha de lliurar la seua quiniela oficial completa <strong>abans del termini fixat</strong>.</li>
+              <li>No s'acceptaran modificacions una vegada tancada la inscripció.</li>
+              <li>La quota d'inscripció és única i no reemborsable.</li>
+              <li>El nombre màxim de quinieles per participant pot estar limitat pels organitzadors.</li>
+            </ul>
+          </div>
+          <div class="info-card card-accent-gold">
+            <div class="card-icon" aria-hidden="true">💰</div>
+            <h3 class="card-title">Fons Econòmic</h3>
+            <ul class="card-list">
+              <li>El fons total s'obté de la suma de totes les quotes d'inscripció.</li>
+              <li>Els organitzadors poden retindre un percentatge mínim per a cobrir despeses de gestió.</li>
+              <li>El fons net es repartirà entre els premis establerts en el reglament.</li>
+              <li>En cas de quòrum mínim no assolit, els organitzadors decidiran el procediment a seguir.</li>
+              <li>El fons econòmic es farà públic un vegada tancat el termini d'inscripció.</li>
+            </ul>
+          </div>
+          <div class="info-card card-accent-green">
+            <div class="card-icon" aria-hidden="true">📅</div>
+            <h3 class="card-title">Terminis</h3>
+            <ul class="card-list">
+              <li><strong>Inscripció:</strong> Fins a 24 hores abans del primer partit del Mundial.</li>
+              <li><strong>Lliurament de quinieles:</strong> Abans del xiulet inicial del primer match.</li>
+              <li><strong>Final:</strong> Es respectaran els terminis específics del tram final (veure apartat d'hores límit).</li>
+              <li>Qualsevol quiniela lliurada fora de termini quedarà automàticament invalidada.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Estructura de Premis -->
+    <section class="section section-alt" id="premis" aria-labelledby="title-premis">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-number" aria-hidden="true">02</div>
+          <div class="section-badge">Apartat 2</div>
+          <h2 class="section-title" id="title-premis">Estructura de Premis</h2>
+          <p class="section-subtitle">Coneix com es distribueix el premi total entre els participants guanyadors.</p>
+        </div>
+        <div class="podium-container" aria-label="Podi de premis">
+          <div class="podium-card podium-silver" role="article" aria-label="Segon premi">
+            <div class="podium-rank" aria-hidden="true">🥈</div>
+            <h3 class="podium-position">2n Premi</h3>
+            <div class="podium-percent">25%</div>
+            <p class="podium-desc">Del fons net total</p>
+            <p class="podium-rule">Segon participant amb més punts acumulats al final del torneig.</p>
+          </div>
+          <div class="podium-card podium-gold" role="article" aria-label="Primer premi">
+            <div class="podium-champion-tag" aria-hidden="true">⭐ CAMPIÓ ⭐</div>
+            <div class="podium-rank" aria-hidden="true">🥇</div>
+            <h3 class="podium-position">1r Premi</h3>
+            <div class="podium-percent">50%</div>
+            <p class="podium-desc">Del fons net total</p>
+            <p class="podium-rule">Participant amb major puntuació total al finalitzar el Mundial 2026.</p>
+          </div>
+          <div class="podium-card podium-bronze" role="article" aria-label="Tercer premi">
+            <div class="podium-rank" aria-hidden="true">🥉</div>
+            <h3 class="podium-position">3r Premi</h3>
+            <div class="podium-percent">15%</div>
+            <p class="podium-desc">Del fons net total</p>
+            <p class="podium-rule">Tercer participant amb més punts al final del torneig.</p>
+          </div>
+        </div>
+        <div class="prize-table-wrapper" role="region" aria-label="Taula de distribució de premis">
+          <h3 class="prize-table-title">Distribució completa del fons</h3>
+          <div class="prize-table">
+            <div class="prize-row prize-row-header" role="row" aria-hidden="true">
+              <span role="columnheader">Posició</span>
+              <span role="columnheader">% del Fons</span>
+              <span role="columnheader">Descripció</span>
+            </div>
+            <div class="prize-row" role="row">
+              <span class="prize-pos gold-text" role="cell">🥇 1r lloc</span>
+              <span class="prize-pct" role="cell">50%</span>
+              <span class="prize-desc" role="cell">Guanyador absolut</span>
+            </div>
+            <div class="prize-row" role="row">
+              <span class="prize-pos silver-text" role="cell">🥈 2n lloc</span>
+              <span class="prize-pct" role="cell">25%</span>
+              <span class="prize-desc" role="cell">Subcampió</span>
+            </div>
+            <div class="prize-row" role="row">
+              <span class="prize-pos bronze-text" role="cell">🥉 3r lloc</span>
+              <span class="prize-pct" role="cell">15%</span>
+              <span class="prize-desc" role="cell">Tercer classificat</span>
+            </div>
+            <div class="prize-row prize-row-special" role="row">
+              <span class="prize-pos" role="cell">⭐ Especial</span>
+              <span class="prize-pct" role="cell">10%</span>
+              <span class="prize-desc" role="cell">Millor pronòstic de la final (encerta el resultat exacte)</span>
+            </div>
+            <div class="prize-row prize-row-note" role="row">
+              <span role="cell" colspan="3">* Si cap participant encerta el resultat exacte de la final, el 10% especial s'afig al primer premi.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Fases del Joc -->
+    <section class="section" id="fases" aria-labelledby="title-fases">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-number" aria-hidden="true">03</div>
+          <div class="section-badge">Apartat 3</div>
+          <h2 class="section-title" id="title-fases">Fases del Joc</h2>
+          <p class="section-subtitle">El torneig es divideix en diverses fases, cadascuna amb les seues pròpies normes de pronòstic.</p>
+        </div>
+        <div class="timeline" role="list" aria-label="Fases del torneig">
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-marker" aria-hidden="true">
+              <span class="timeline-step">1</span>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-badge">Fase de Grups</div>
+              <h3 class="timeline-title">Fase de Grups (48 partits)</h3>
+              <p class="timeline-desc">En aquesta fase cal predir el <strong>guanyador de cada grup</strong> i els <strong>resultats exactes dels partits seleccionats</strong>. El Mundial 2026 comptarà amb 12 grups de 4 equips cadascun, que jugaran entre ells en un sistema de lligueta.</p>
+              <div class="timeline-rules">
+                <div class="rule-chip">✅ Pronòstic de portada de grup</div>
+                <div class="rule-chip">✅ Resultats exactes (partits seleccionats)</div>
+                <div class="rule-chip">✅ Classificats als vuitens</div>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-marker" aria-hidden="true">
+              <span class="timeline-step">2</span>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-badge">Vuitens de Final</div>
+              <h3 class="timeline-title">Vuitens de Final (16 partits)</h3>
+              <p class="timeline-desc">Cal predir el <strong>guanyador de cada enfrontament</strong>. Si el resultat es decideix per pròrroga o penals, el guanyador serà l'equip que avança. Es valora especialment l'encert en el resultat del temps reglamentari.</p>
+              <div class="timeline-rules">
+                <div class="rule-chip">✅ Guanyador del partit</div>
+                <div class="rule-chip">✅ Punts extra per resultat exacte</div>
+                <div class="rule-chip">⚡ Pròrroga/penals comptabilitzats</div>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-marker" aria-hidden="true">
+              <span class="timeline-step">3</span>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-badge">Quarts de Final</div>
+              <h3 class="timeline-title">Quarts de Final (8 partits)</h3>
+              <p class="timeline-desc">Mateixa dinàmica que als vuitens però amb <strong>majors puntuacions</strong> per encert. Cada pronòstic encertat val més punts, per la natura eliminatòria avançada del torneig.</p>
+              <div class="timeline-rules">
+                <div class="rule-chip">✅ Guanyador del party</div>
+                <div class="rule-chip">⭐ Puntuació augmentada</div>
+                <div class="rule-chip">✅ Resultat exacte (bonus)</div>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-marker" aria-hidden="true">
+              <span class="timeline-step">4</span>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-badge">Semifinals</div>
+              <h3 class="timeline-title">Semifinals (4 partits)</h3>
+              <p class="timeline-desc">Els quatre equips semifinalistes s'enfronten per arribar a la gran final. En aquesta fase, <strong>la puntuació per encert és la major fins al moment</strong>, i es premiarà especialment encertar el finalista.</p>
+              <div class="timeline-rules">
+                <div class="rule-chip">✅ Guanyador del partit</div>
+                <div class="rule-chip">⭐⭐ Puntuació màxima de fase</div>
+                <div class="rule-chip">🏅 Premi per finalista correcte</div>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-marker timeline-final" aria-hidden="true">
+              <span class="timeline-step">5</span>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-badge timeline-badge-final">🏆 GRAN FINAL</div>
+              <h3 class="timeline-title">Gran Final + 3r i 4t lloc</h3>
+              <p class="timeline-desc">La fase de major puntuació del torneig. Cal predir el <strong>campió del món</strong> i l'<strong>equip subcampió</strong>. El resultat exacte de la final porta una bonificació especial única i pot donar accés al premi especial del 10% del fons.</p>
+              <div class="timeline-rules">
+                <div class="rule-chip">🥇 Campió del Món</div>
+                <div class="rule-chip">🥈 Subcampió</div>
+                <div class="rule-chip">💰 Premi especial per resultat exacte</div>
+                <div class="rule-chip">🥉 3r i 4t lloc</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Sistema de Puntuació -->
+    <section class="section section-alt" id="puntuacio" aria-labelledby="title-puntuacio">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-number" aria-hidden="true">04</div>
+          <div class="section-badge">Apartat 4</div>
+          <h2 class="section-title" id="title-puntuacio">Sistema de Puntuació</h2>
+          <p class="section-subtitle">Com s'atorguen els punts al llarg de tot el torneig.</p>
+        </div>
+        <div class="scoring-grid">
+          <div class="scoring-table-wrapper" role="region" aria-label="Taula de puntuació per fase">
+            <h3 class="scoring-table-title">Punts per Fase</h3>
+            <table class="scoring-table" aria-describedby="scoring-desc">
+              <caption id="scoring-desc" class="visually-hidden">Taula de punts atorgats per cada tipus d'encert a cada fase del torneig</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Fase</th>
+                  <th scope="col">Guanyador</th>
+                  <th scope="col">Resultat Exacte</th>
+                  <th scope="col">Campió de Grup</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Fase de Grups</td>
+                  <td class="pts-cell">1 pt</td>
+                  <td class="pts-cell pts-bonus">3 pts</td>
+                  <td class="pts-cell pts-special">2 pts</td>
+                </tr>
+                <tr>
+                  <td>Vuitens de Final</td>
+                  <td class="pts-cell">2 pts</td>
+                  <td class="pts-cell pts-bonus">5 pts</td>
+                  <td class="pts-cell">–</td>
+                </tr>
+                <tr>
+                  <td>Quarts de Final</td>
+                  <td class="pts-cell">3 pts</td>
+                  <td class="pts-cell pts-bonus">7 pts</td>
+                  <td class="pts-cell">–</td>
+                </tr>
+                <tr>
+                  <td>Semifinals</td>
+                  <td class="pts-cell">4 pts</td>
+                  <td class="pts-cell pts-bonus">9 pts</td>
+                  <td class="pts-cell">–</td>
+                </tr>
+                <tr>
+                  <td>3r i 4t lloc</td>
+                  <td class="pts-cell">3 pts</td>
+                  <td class="pts-cell pts-bonus">6 pts</td>
+                  <td class="pts-cell">–</td>
+                </tr>
+                <tr class="final-row">
+                  <td>Gran Final 🏆</td>
+                  <td class="pts-cell">5 pts</td>
+                  <td class="pts-cell pts-bonus">12 pts</td>
+                  <td class="pts-cell">–</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="scoring-rules">
+            <h3 class="scoring-rules-title">Regles de Puntuació</h3>
+            <div class="scoring-rule-item">
+              <div class="rule-icon" aria-hidden="true">⚽</div>
+              <div class="rule-text">
+                <strong>Encert del guanyador:</strong> S'atorguen els punts base de la fase corresponent si es prediu correctament l'equip guanyador del parti.
+              </div>
+            </div>
+            <div class="scoring-rule-item">
+              <div class="rule-icon" aria-hidden="true">🎯</div>
+              <div class="rule-text">
+                <strong>Resultat exacte:</strong> Si a més s'encerta el marcador final (incloent-hi, si escau, el resultat al temps reglamentari), s'obtenen els punts bonificació indicats a la taula.
+              </div>
+            </div>
+            <div class="scoring-rule-item">
+              <div class="rule-icon" aria-hidden="true">🏅</div>
+              <div class="rule-text">
+                <strong>Campió de grup:</strong> Encertar el primer classificat de cada grup atorga punts addicionals.
+              </div>
+            </div>
+            <div class="scoring-rule-item">
+              <div class="rule-icon" aria-hidden="true">⚡</div>
+              <div class="rule-text">
+                <strong>Pròrroga i penals:</strong> En fase eliminatòria, el guanyador és el que avança independentment del resultat al temps reglamentari. Però els punts per resultat exacte es calculen sobre el marcador al 90' (o 120').
+              </div>
+            </div>
+            <div class="scoring-rule-item">
+              <div class="rule-icon" aria-hidden="true">🌟</div>
+              <div class="rule-text">
+                <strong>Campió del Món:</strong> Encertar el campió de manera correcta dobla els punts de la final.
+              </div>
+            </div>
+            <div class="scoring-rule-item">
+              <div class="rule-icon" aria-hidden="true">❌</div>
+              <div class="rule-text">
+                <strong>Sense punts negatius:</strong> Un pronòstic erroni no penalitza. Simplement no s'obtenen punts per eixe encert.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Hores Límit de la Final -->
+    <section class="section" id="horeslimit" aria-labelledby="title-hores">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-number" aria-hidden="true">05</div>
+          <div class="section-badge">Apartat 5</div>
+          <h2 class="section-title" id="title-hores">Hores Límit de la Final</h2>
+          <p class="section-subtitle">Terminis específics per als pronòstics de la fase final del torneig.</p>
+        </div>
+        <div class="deadline-grid">
+          <div class="deadline-card">
+            <div class="deadline-icon" aria-hidden="true">⏰</div>
+            <div class="deadline-info">
+              <h3 class="deadline-title">Semifinals</h3>
+              <p class="deadline-rule">Els pronòstics de les semifinals s'han de tancar <strong>1 hora abans del xiulet inicial</strong> de cada semifinal.</p>
+              <div class="deadline-chip deadline-chip-warning">⚠️ 1 hora abans de cada semi</div>
+            </div>
+          </div>
+          <div class="deadline-card deadline-card-featured">
+            <div class="deadline-icon" aria-hidden="true">🏆</div>
+            <div class="deadline-info">
+              <h3 class="deadline-title">Gran Final</h3>
+              <p class="deadline-rule">El pronòstic de la gran final (guanyador, resultat exacte i gols marcats) s'ha de lliurar <strong>2 hores abans del xiulet inicial</strong> de la final. No s'acceptaran actualitzacions.</p>
+              <div class="deadline-chip deadline-chip-danger">🔴 2 hores abans de la final</div>
+            </div>
+          </div>
+          <div class="deadline-card">
+            <div class="deadline-icon" aria-hidden="true">📱</div>
+            <div class="deadline-info">
+              <h3 class="deadline-title">Com lliurar el pronòstic</h3>
+              <p class="deadline-rule">El lliurament es farà per l'<strong>únic canal oficial</strong> designat pels organitzadors. Qualsevol pronòstic enviat per un altre canal no serà vàlid.</p>
+              <div class="deadline-chip deadline-chip-info">ℹ️ Canal oficial obligatori</div>
+            </div>
+          </div>
+          <div class="deadline-card">
+            <div class="deadline-icon" aria-hidden="true">🚫</div>
+            <div class="deadline-info">
+              <h3 class="deadline-title">Pronòstics Tardans</h3>
+              <p class="deadline-rule">Qualsevol pronòstic rebut <strong>després de l'hora límit</strong> serà automàticament rebutjat, sense excepcions ni recursos possibles.</p>
+              <div class="deadline-chip deadline-chip-danger">❌ Invalidació automàtica</div>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-final-note" role="region" aria-label="Nota important sobre terminis">
+          <div class="final-note-icon" aria-hidden="true">💡</div>
+          <div class="final-note-text">
+            <strong>Recorda:</strong> L'hora oficials s'ajustarà a l'<strong>hora local de la seu del partit</strong>. Els organitzadors comunicaran l'hora límit exacta amb suficient antelació per a cada enfrontament crític.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Desempats -->
+    <section class="section section-alt" id="desempats" aria-labelledby="title-desempats">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-number" aria-hidden="true">06</div>
+          <div class="section-badge">Apartat 6</div>
+          <h2 class="section-title" id="title-desempats">Criteris de Desempat</h2>
+          <p class="section-subtitle">En cas d'igualtat de punts entre participants, s'aplicaran els següents criteris per ordre de prioritat.</p>
+        </div>
+        <div class="tiebreak-cascade">
+          <div class="tiebreak-item" role="article" aria-label="Criteri de desempat 1">
+            <div class="tiebreak-number" aria-hidden="true">1</div>
+            <div class="tiebreak-content">
+              <h3 class="tiebreak-title">Pronòstic del Campió del Món</h3>
+              <p class="tiebreak-desc">Guanya qui haja encertat el <strong>campió del Mundial 2026</strong>. Si ambdós o cap ha encertat el campió, es passa al segon criteri.</p>
+              <div class="tiebreak-tag">Criteri Principal</div>
+            </div>
+          </div>
+          <div class="tiebreak-connector" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+          <div class="tiebreak-item" role="article" aria-label="Criteri de desempat 2">
+            <div class="tiebreak-number" aria-hidden="true">2</div>
+            <div class="tiebreak-content">
+              <h3 class="tiebreak-title">Resultat Exacte de la Final</h3>
+              <p class="tiebreak-desc">Guanya qui haja encertat el <strong>marcador exacte de la gran final</strong> (gols de cada equip al temps reglamentari). Si continua l'empat, es passa al tercer criteri.</p>
+              <div class="tiebreak-tag">Criteri Secundari</div>
+            </div>
+          </div>
+          <div class="tiebreak-connector" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+          <div class="tiebreak-item" role="article" aria-label="Criteri de desempat 3">
+            <div class="tiebreak-number" aria-hidden="true">3</div>
+            <div class="tiebreak-content">
+              <h3 class="tiebreak-title">Nombre d'Encerts Exactes al Torneig</h3>
+              <p class="tiebreak-desc">Guanya qui tinga un <strong>major nombre total de resultats exactes</strong> acumulats al llarg de tot el torneig. Inclou totes les fases.</p>
+              <div class="tiebreak-tag">Criteri Terciari</div>
+            </div>
+          </div>
+          <div class="tiebreak-connector" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+          <div class="tiebreak-item" role="article" aria-label="Criteri de desempat 4">
+            <div class="tiebreak-number" aria-hidden="true">4</div>
+            <div class="tiebreak-content">
+              <h3 class="tiebreak-title">Encert del 3r i 4t Lloc</h3>
+              <p class="tiebreak-desc">Guanya qui haja encertat el guanyador del <strong>partit pel tercer lloc</strong>. Es considera un bon indicador de coneixement del torneig en conjunt.</p>
+              <div class="tiebreak-tag">Criteri Quaternari</div>
+            </div>
+          </div>
+          <div class="tiebreak-connector" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+          <div class="tiebreak-item tiebreak-final" role="article" aria-label="Criteri de desempat final">
+            <div class="tiebreak-number tiebreak-number-final" aria-hidden="true">5</div>
+            <div class="tiebreak-content">
+              <h3 class="tiebreak-title">Decisió dels Organitzadors</h3>
+              <p class="tiebreak-desc">En cas d'empat absolut en tots els criteris anteriors, els <strong>organitzadors decidiran</strong> el desempat per sorteig equitatiu o la mesura que consideren oportuna. La seua decisió és inapel·lable.</p>
+              <div class="tiebreak-tag tiebreak-tag-final">Criteri Final (Inapel·lable)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: Regles de Validesa -->
+    <section class="section" id="validesa" aria-labelledby="title-validesa">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-number" aria-hidden="true">07</div>
+          <div class="section-badge">Apartat 7</div>
+          <h2 class="section-title" id="title-validesa">Regles de Validesa</h2>
+          <p class="section-subtitle">Condicions que determinen la validesa d'una quiniela i del joc en general.</p>
+        </div>
+        <div class="validity-grid">
+          <div class="validity-card validity-valid">
+            <div class="validity-header">
+              <div class="validity-icon" aria-hidden="true">✅</div>
+              <h3 class="validity-title">Quiniela Vàlida</h3>
+            </div>
+            <ul class="validity-list">
+              <li>Lliurada en el termini establert.</li>
+              <li>Amb tots els camps obligatoris completats.</li>
+              <li>Per canal oficial designat pels organitzadors.</li>
+              <li>Acompanyada del pagament de la quota d'inscripció.</li>
+              <li>Sense esmenes o modificacions posteriors al tancament.</li>
+              <li>Amb la identificació del participant clarament indicada.</li>
+            </ul>
+          </div>
+          <div class="validity-card validity-invalid">
+            <div class="validity-header">
+              <div class="validity-icon" aria-hidden="true">❌</div>
+              <h3 class="validity-title">Quiniela Invàlida</h3>
+            </div>
+            <ul class="validity-list">
+              <li>Lliurada fora del termini establert.</li>
+              <li>Incompleta (camps en blanc o no seleccionats).</li>
+              <li>Enviada per un canal no oficial.</li>
+              <li>Sense el pagament previ de la quota.</li>
+              <li>Amb dades d'identificació incorrectes o falses.</li>
+              <li>Duplicada (si el participant ja ha lliurat una butlleta vàlida).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="general-rules">
+          <h3 class="general-rules-title">Normes Generals de Validesa del Joc</h3>
+          <div class="general-rules-grid">
+            <div class="general-rule-item">
+              <div class="general-rule-icon" aria-hidden="true">🏛️</div>
+              <div class="general-rule-text">
+                <strong>Autoritat organitzadora:</strong> Els organitzadors de la porra tenen la potestat exclusiva d'interpretar el reglament. Qualsevol situació no prevista serà resolta per ells de manera definitiva.
+              </div>
+            </div>
+            <div class="general-rule-item">
+              <div class="general-rule-icon" aria-hidden="true">⚖️</div>
+              <div class="general-rule-text">
+                <strong>Acceptació del reglament:</strong> Participar en la porra implica l'acceptació plena i sense reserves de totes les normes d'aquest reglament.
+              </div>
+            </div>
+            <div class="general-rule-item">
+              <div class="general-rule-icon" aria-hidden="true">🔄</div>
+              <div class="general-rule-text">
+                <strong>Modificació del reglament:</strong> Els organitzadors podran modificar el reglament per causes de força major, sempre comunicant-ho amb la màxima antelació possible.
+              </div>
+            </div>
+            <div class="general-rule-item">
+              <div class="general-rule-icon" aria-hidden="true">🚫</div>
+              <div class="general-rule-text">
+                <strong>Frau i trampes:</strong> Qualsevol intent de manipulació, falsificació o frau suposarà la descalificació immediata i la pèrdua de drets sobre qualsevol premi.
+              </div>
+            </div>
+            <div class="general-rule-item">
+              <div class="general-rule-icon" aria-hidden="true">📢</div>
+              <div class="general-rule-text">
+                <strong>Comunicació de resultats:</strong> Els resultats parcials i finals es comunicaran a través del canal oficial de la porra. Cada participant és responsable de consultar-los.
+              </div>
+            </div>
+            <div class="general-rule-item">
+              <div class="general-rule-icon" aria-hidden="true">🌍</div>
+              <div class="general-rule-text">
+                <strong>Resultats oficials:</strong> Es prendran com a referència únicament els resultats oficials publicats per la FIFA per al Mundial 2026.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="footer-logo-icon" aria-hidden="true">⚽</span>
+            <span class="footer-logo-text">La Porra del <strong>Mundial 2026</strong></span>
+          </div>
+          <p class="footer-tagline">El teu joc de pronòstics per al Mundial de Futbol 2026. Fes els teus pronòstics i guanya!</p>
+        </div>
+        <div class="footer-links">
+          <h4 class="footer-links-title">Apartats del Reglament</h4>
+          <ul class="footer-nav" aria-label="Navegació peu de pàgina">
+            <li><a href="#inscripcio">Inscripció i Fons</a></li>
+            <li><a href="#premis">Estructura de Premis</a></li>
+            <li><a href="#fases">Fases del Joc</a></li>
+            <li><a href="#puntuacio">Sistema de Puntuació</a></li>
+            <li><a href="#horeslimit">Hores Límit</a></li>
+            <li><a href="#desempats">Desempats</a></li>
+            <li><a href="#validesa">Regles de Validesa</a></li>
+          </ul>
+        </div>
+        <div class="footer-info">
+          <h4 class="footer-links-title">Informació</h4>
+          <p class="footer-text">Mundial 2026 · USA, Canadà &amp; Mèxic</p>
+          <p class="footer-text">11 de juny – 19 de juliol 2026</p>
+          <p class="footer-text">Grup Olga</p>
+          <div class="footer-badges" aria-label="Estadístiques del Mundial">
+            <span class="footer-badge">48 equips</span>
+            <span class="footer-badge">104 partits</span>
+            <span class="footer-badge">3 països</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2026 La Porra del Mundial · Reglament Oficial · Tots els drets reservats</p>
+        <p class="footer-disclaimer">Document informatiu. En cas de discrepàncies, prevalen les decisions dels organitzadors.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Tornar a l'inici de la pàgina">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <script src="main.js"></script>
+</body>
+</html>
