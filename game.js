@@ -97,14 +97,48 @@ function getFormation(teamIdx, numTokens) {
 }
 
 // ─── INIT ─────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   canvas = document.getElementById('gameCanvas');
   ctx    = canvas.getContext('2d');
+
+  // Sync played teams from Firebase (or localStorage) before building lobby
+  if (window.DB) {
+    showLobbyStatus('🌐 Connectant...');
+    await refreshPlayedTeamsFromDB();
+  }
+
   buildLobby();
   bindLobbyEvents();
   bindGameEvents();
   startLoop();
+
+  // Auto-refresh played teams every 20s when in lobby (real-time multi-game support)
+  setInterval(async () => {
+    if (state === 'LOBBY' && window.DB) {
+      await refreshPlayedTeamsFromDB();
+      buildLobby();
+    }
+  }, 20000);
 });
+
+async function refreshPlayedTeamsFromDB() {
+  if (!window.DB) return;
+  try {
+    const played = await DB.getPlayedTeams();
+    localStorage.setItem(SK_PLAYED, JSON.stringify(played));
+    const modeEl = document.getElementById('dbModeInfo');
+    if (modeEl) modeEl.textContent = window.ONLINE_MODE ? '🌐 Mode Online' : '💾 Mode Local';
+    showLobbyStatus('');
+  } catch (e) {
+    console.warn('[Game] DB sync failed:', e.message);
+    showLobbyStatus('⚠️ Mode local (sense connexió)');
+  }
+}
+
+function showLobbyStatus(msg) {
+  const el = document.getElementById('teamsRemainingInfo');
+  if (el && msg) el.textContent = msg;
+}
 
 // ─── CANVAS SIZING ────────────────────────────────────────────
 function resizeCanvas() {
@@ -124,15 +158,15 @@ function resizeCanvas() {
 window.addEventListener('resize', () => { if (state === 'PLAYING' || state === 'GOAL_ANIM') resizeCanvas(); });
 
 function computePitch() {
-  const mg = Math.round(CANVAS_W * 0.042); // tighter side margins
+  const mg = Math.round(CANVAS_W * 0.022); // ultra-tight side margins
   P.x     = mg;
-  P.y     = Math.round(CANVAS_H * 0.055); // tighter top margin
+  P.y     = Math.round(CANVAS_H * 0.018); // ultra-tight top margin
   P.w     = CANVAS_W - mg * 2;
-  P.h     = CANVAS_H - Math.round(CANVAS_H * 0.11); // more pitch height
+  P.h     = CANVAS_H - Math.round(CANVAS_H * 0.036); // 96% height used
   P.cx    = P.x + P.w / 2;
   P.cy    = P.y + P.h / 2;
-  P.goalH = P.h * 0.32;
-  P.goalD = Math.round(CANVAS_W * 0.038); // goal depth
+  P.goalH = P.h * 0.28;
+  P.goalD = Math.round(CANVAS_W * 0.032); // goal depth
 }
 
 // ─── LOBBY BUILDER ────────────────────────────────────────────
@@ -1035,11 +1069,9 @@ function getPlayedTeams() {
 function saveMatchResult() {
   if (selectedTeams[0] === null || selectedTeams[1] === null) return;
   try {
-    const matches = JSON.parse(localStorage.getItem(SK_MATCHES) || '[]');
-    const played  = getPlayedTeams();
     const t1 = TEAMS[selectedTeams[0]];
     const t2 = TEAMS[selectedTeams[1]];
-    matches.push({
+    const matchData = {
       id: Date.now(),
       date: new Date().toISOString(),
       team1: { name: t1.name, flag: t1.flag, abbr: t1.abbr, color: t1.color },
@@ -1047,13 +1079,28 @@ function saveMatchResult() {
       score1: score[0],
       score2: score[1],
       winner: score[0] > score[1] ? 'team1' : score[1] > score[0] ? 'team2' : 'draw'
-    });
+    };
+
+    // 1. Save to localStorage immediately (synchronous, instant)
+    const matches = JSON.parse(localStorage.getItem(SK_MATCHES) || '[]');
+    const played  = getPlayedTeams();
+    matches.push(matchData);
     [t1.name, t2.name].forEach(n => { if (!played.includes(n)) played.push(n); });
     localStorage.setItem(SK_MATCHES, JSON.stringify(matches));
     localStorage.setItem(SK_PLAYED, JSON.stringify(played));
+
+    // 2. Push to Firebase in background (async, fire-and-forget)
+    if (window.DB) {
+      DB.addMatch(matchData)
+        .then(() => DB.markTeamsPlayed([t1.name, t2.name]))
+        .then(() => console.log('[DB] Result pushed online ✓'))
+        .catch(e => console.warn('[DB] Push failed:', e.message));
+    }
+
     console.log('Result saved:', t1.name, score[0], '-', score[1], t2.name);
-  } catch (e) { console.error('Could not save to localStorage:', e); }
+  } catch (e) { console.error('Could not save:', e); }
 }
 
 console.log('⚽ Chapas del Mundial 2026 — Game Engine v2.0 loaded!');
 console.log('ℹ️  Admin panel: admin.html | Tournament: tournament.html');
+console.log('🌐 Online mode:', window.ONLINE_MODE ? 'YES' : 'NO (configure firebase-config.js)');

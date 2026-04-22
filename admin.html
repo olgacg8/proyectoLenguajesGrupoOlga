@@ -6,6 +6,8 @@
   <title>🔐 Panel d'Administrador – Chapas 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="firebase-config.js"></script>
+  <script src="db.js"></script>
   <style>
     :root {
       --dark: #070c18;
@@ -486,8 +488,56 @@
 <script>
   // ── AUTH ──────────────────────────────────────────────────────
   const PASS = 'admin2026';
-  const SK_MATCHES = 'porraMatches';
-  const SK_PLAYED  = 'porraPlayedTeams';
+
+  let editingKey = null;
+
+  // Auth check on load
+  if (sessionStorage.getItem('adminAuth') === '1') showDashboard();
+
+  document.getElementById('loginBtn').onclick = doLogin;
+  document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+  function doLogin() {
+    if (document.getElementById('pwInput').value === PASS) {
+      sessionStorage.setItem('adminAuth', '1');
+      showDashboard();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+      document.getElementById('pwInput').value = '';
+      document.getElementById('pwInput').focus();
+    }
+  }
+
+  function showDashboard() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'flex';
+    renderAll();
+  }
+
+  document.getElementById('logoutBtn').onclick = () => {
+    sessionStorage.removeItem('adminAuth'); location.reload();
+  };
+
+  // ── TABS ──────────────────────────────────────────────────────
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      renderAll();
+    };
+  });
+
+  // ── DATA ──────────────────────────────────────────────────────
+  async function getMatches() {
+    try { if (window.DB) return await DB.getMatches(); } catch {}
+    try { return JSON.parse(localStorage.getItem('porraMatches') || '[]'); } catch { return []; }
+  }
+  async function getPlayed() {
+    try { if (window.DB) return await DB.getPlayedTeams(); } catch {}
+    try { return JSON.parse(localStorage.getItem('porraPlayedTeams') || '[]'); } catch { return []; }
+  }
 
   const ALL_TEAMS = [
     { name: 'Brasil',        abbr: 'BRA', flag: '🇧🇷' },
@@ -512,82 +562,34 @@
     { name: 'Ghana',         abbr: 'GHA', flag: '🇬🇭' },
   ];
 
-  let editingId = null;
-
-  function getMatches() {
-    try { return JSON.parse(localStorage.getItem(SK_MATCHES) || '[]'); } catch { return []; }
-  }
-  function setMatches(m) { localStorage.setItem(SK_MATCHES, JSON.stringify(m)); }
-  function getPlayed() {
-    try { return JSON.parse(localStorage.getItem(SK_PLAYED) || '[]'); } catch { return []; }
-  }
-  function setPlayed(p) { localStorage.setItem(SK_PLAYED, JSON.stringify(p)); }
-
-  // Auth check
-  if (sessionStorage.getItem('adminAuth') === '1') showDashboard();
-
-  document.getElementById('loginBtn').onclick = doLogin;
-  document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-
-  function doLogin() {
-    const val = document.getElementById('pwInput').value;
-    if (val === PASS) {
-      sessionStorage.setItem('adminAuth', '1');
-      showDashboard();
-    } else {
-      document.getElementById('loginError').style.display = 'block';
-      document.getElementById('pwInput').value = '';
-      document.getElementById('pwInput').focus();
-    }
-  }
-
-  function showDashboard() {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'flex';
-    renderAll();
-  }
-
-  document.getElementById('logoutBtn').onclick = () => {
-    sessionStorage.removeItem('adminAuth');
-    location.reload();
-  };
-
-  // ── TABS ──────────────────────────────────────────────────────
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-      renderAll();
-    };
-  });
-
   // ── RENDER ALL ────────────────────────────────────────────────
-  function renderAll() {
-    renderStats();
-    renderMatchList();
-    renderStandings();
-    renderTeams();
+  async function renderAll() {
+    const onlineEl = document.querySelector('.admin-brand');
+    if (onlineEl) onlineEl.title = window.ONLINE_MODE ? '🌐 Firebase Online' : '💾 localStorage Local';
+    await renderStats();
+    await renderMatchList();
+    await renderStandings();
+    await renderTeams();
     populateAddForm();
   }
 
   // ── STATS ─────────────────────────────────────────────────────
-  function renderStats() {
-    const matches = getMatches();
-    const played = getPlayed();
+  async function renderStats() {
+    const matches = await getMatches();
+    const played  = await getPlayed();
     const goals = matches.reduce((s, m) => s + m.score1 + m.score2, 0);
     document.getElementById('statsRow').innerHTML = `
       <div class="stat-mini"><div class="stat-mini-val">${matches.length}</div><div class="stat-mini-lbl">Partits</div></div>
       <div class="stat-mini"><div class="stat-mini-val">${played.length}</div><div class="stat-mini-lbl">Equips Jugats</div></div>
       <div class="stat-mini"><div class="stat-mini-val">${ALL_TEAMS.length - played.length}</div><div class="stat-mini-lbl">Disponibles</div></div>
       <div class="stat-mini"><div class="stat-mini-val">${goals}</div><div class="stat-mini-lbl">Gols Totals</div></div>
+      <div class="stat-mini"><div class="stat-mini-val" style="color:${window.ONLINE_MODE?'#4ade80':'#fb923c'}">${window.ONLINE_MODE ? '🌐' : '💾'}</div><div class="stat-mini-lbl">${window.ONLINE_MODE ? 'Firebase Online' : 'Mode Local'}</div></div>
     `;
   }
 
   // ── MATCH LIST ────────────────────────────────────────────────
-  function renderMatchList() {
-    const matches = getMatches();
+  async function renderMatchList() {
+    const matches = await getMatches();
     const el = document.getElementById('matchAdminList');
     if (matches.length === 0) {
       el.innerHTML = '<div class="empty-state"><div class="empty-icon">⚽</div><div class="empty-text">No hi ha partits registrats</div></div>';
@@ -598,6 +600,7 @@
       const isW1 = m.winner === 'team1', isW2 = m.winner === 'team2';
       const d = new Date(m.date);
       const dateStr = d.toLocaleDateString('ca-ES', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+      const key = m._key || m.id;
       return `<div class="match-admin-card">
         <div class="mac-team ${isW1 ? '' : 'mac-loser'}">
           <span class="mac-flag">${m.team1.flag}</span>
@@ -611,8 +614,8 @@
           <span class="mac-flag">${m.team2.flag}</span>
         </div>
         <div class="mac-actions">
-          <button class="btn-edit" onclick="openEdit(${m.id})">✏️</button>
-          <button class="btn-del" onclick="deleteMatch(${m.id})">🗑️</button>
+          <button class="btn-edit" onclick="openEdit('${key}')">✏️</button>
+          <button class="btn-del" onclick="deleteMatch('${key}')">🗑️</button>
         </div>
       </div>`;
     }).join('') + '</div>';
@@ -638,8 +641,8 @@
     });
   }
 
-  function renderStandings() {
-    const matches = getMatches();
+  async function renderStandings() {
+    const matches = await getMatches();
     const standings = calcStandings(matches);
     const el = document.getElementById('adminStandingsWrap');
     if (standings.length === 0) {
@@ -664,8 +667,8 @@
   }
 
   // ── TEAMS GRID ────────────────────────────────────────────────
-  function renderTeams() {
-    const played = getPlayed();
+  async function renderTeams() {
+    const played = await getPlayed();
     const el = document.getElementById('teamsAdminGrid');
     el.innerHTML = ALL_TEAMS.map(t => {
       const hasPlayed = played.includes(t.name);
@@ -693,7 +696,7 @@
     });
   }
 
-  document.getElementById('addMatchBtn').onclick = () => {
+  document.getElementById('addMatchBtn').onclick = async () => {
     const t1Name = document.getElementById('addTeam1').value;
     const t2Name = document.getElementById('addTeam2').value;
     const s1 = parseInt(document.getElementById('addScore1').value) || 0;
@@ -702,33 +705,38 @@
 
     const t1 = ALL_TEAMS.find(t => t.name === t1Name);
     const t2 = ALL_TEAMS.find(t => t.name === t2Name);
-    const matches = getMatches();
-    const played = getPlayed();
-
-    matches.push({
+    const matchData = {
       id: Date.now(),
       date: new Date().toISOString(),
       team1: { name: t1.name, flag: t1.flag, abbr: t1.abbr },
       team2: { name: t2.name, flag: t2.flag, abbr: t2.abbr },
       score1: s1, score2: s2,
       winner: s1 > s2 ? 'team1' : s2 > s1 ? 'team2' : 'draw'
-    });
-
-    [t1.name, t2.name].forEach(n => { if (!played.includes(n)) played.push(n); });
-    setMatches(matches);
-    setPlayed(played);
-    document.getElementById('addScore1').value = 0;
-    document.getElementById('addScore2').value = 0;
-    renderAll();
-    showToast('✅ Partit afegit correctament!', 'success');
+    };
+    try {
+      if (window.DB) {
+        await DB.addMatch(matchData);
+        await DB.markTeamsPlayed([t1.name, t2.name]);
+      } else {
+        const ms = JSON.parse(localStorage.getItem('porraMatches') || '[]');
+        ms.push(matchData); localStorage.setItem('porraMatches', JSON.stringify(ms));
+        const pl = JSON.parse(localStorage.getItem('porraPlayedTeams') || '[]');
+        [t1.name, t2.name].forEach(n => { if (!pl.includes(n)) pl.push(n); });
+        localStorage.setItem('porraPlayedTeams', JSON.stringify(pl));
+      }
+      document.getElementById('addScore1').value = 0;
+      document.getElementById('addScore2').value = 0;
+      await renderAll();
+      showToast('✅ Partit afegit!', 'success');
+    } catch (e) { showToast('❌ Error: ' + e.message, 'error'); }
   };
 
   // ── EDIT ─────────────────────────────────────────────────────
-  function openEdit(id) {
-    const matches = getMatches();
-    const m = matches.find(x => x.id === id);
+  async function openEdit(key) {
+    const matches = await getMatches();
+    const m = matches.find(x => (x._key || x.id) == key);
     if (!m) return;
-    editingId = id;
+    editingKey = key;
     document.getElementById('modalFlag1').textContent = m.team1.flag;
     document.getElementById('modalName1').textContent = m.team1.name;
     document.getElementById('modalFlag2').textContent = m.team2.flag;
@@ -741,74 +749,82 @@
   document.getElementById('editCancel').onclick = () => document.getElementById('editModal').classList.remove('open');
   document.getElementById('editModal').onclick = e => { if (e.target === document.getElementById('editModal')) document.getElementById('editModal').classList.remove('open'); };
 
-  document.getElementById('editSave').onclick = () => {
+  document.getElementById('editSave').onclick = async () => {
     const s1 = parseInt(document.getElementById('editScore1').value) || 0;
     const s2 = parseInt(document.getElementById('editScore2').value) || 0;
-    const matches = getMatches();
-    const idx = matches.findIndex(x => x.id === editingId);
-    if (idx === -1) return;
-    matches[idx].score1 = s1;
-    matches[idx].score2 = s2;
-    matches[idx].winner = s1 > s2 ? 'team1' : s2 > s1 ? 'team2' : 'draw';
-    setMatches(matches);
-    document.getElementById('editModal').classList.remove('open');
-    renderAll();
-    showToast('✅ Resultat actualitzat!', 'success');
+    const newData = { score1: s1, score2: s2, winner: s1 > s2 ? 'team1' : s2 > s1 ? 'team2' : 'draw' };
+    try {
+      if (window.DB) { await DB.updateMatch(editingKey, newData); }
+      else {
+        const ms = JSON.parse(localStorage.getItem('porraMatches') || '[]');
+        const idx = ms.findIndex(m => (m._key || m.id) == editingKey);
+        if (idx !== -1) { ms[idx] = { ...ms[idx], ...newData }; localStorage.setItem('porraMatches', JSON.stringify(ms)); }
+      }
+      document.getElementById('editModal').classList.remove('open');
+      await renderAll();
+      showToast('✅ Resultat actualitzat!', 'success');
+    } catch (e) { showToast('❌ Error: ' + e.message, 'error'); }
   };
 
   // ── DELETE ────────────────────────────────────────────────────
-  function deleteMatch(id) {
+  async function deleteMatch(key) {
     if (!confirm('Segur que vols esborrar aquest partit?')) return;
-    const matches = getMatches().filter(m => m.id !== id);
-    // Recalc played teams from remaining matches
-    const played = [];
-    matches.forEach(m => {
-      if (!played.includes(m.team1.name)) played.push(m.team1.name);
-      if (!played.includes(m.team2.name)) played.push(m.team2.name);
-    });
-    setMatches(matches);
-    setPlayed(played);
-    renderAll();
-    showToast('🗑️ Partit esborrat', 'success');
+    try {
+      if (window.DB) { await DB.deleteMatch(key); }
+      else {
+        const ms = JSON.parse(localStorage.getItem('porraMatches') || '[]').filter(m => (m._key || m.id) != key);
+        localStorage.setItem('porraMatches', JSON.stringify(ms));
+        const names = new Set(); ms.forEach(m => { names.add(m.team1.name); names.add(m.team2.name); });
+        localStorage.setItem('porraPlayedTeams', JSON.stringify([...names]));
+      }
+      await renderAll();
+      showToast('🗑️ Partit esborrat', 'success');
+    } catch (e) { showToast('❌ Error: ' + e.message, 'error'); }
   }
 
   // ── TEAM RESET ────────────────────────────────────────────────
-  function resetTeam(name) {
-    const played = getPlayed().filter(n => n !== name);
-    setPlayed(played);
-    renderAll();
-    showToast(`🔄 ${name} pot tornar a jugar`, 'success');
+  async function resetTeam(name) {
+    try {
+      if (window.DB) await DB.resetTeam(name);
+      else {
+        const pl = JSON.parse(localStorage.getItem('porraPlayedTeams') || '[]').filter(n => n !== name);
+        localStorage.setItem('porraPlayedTeams', JSON.stringify(pl));
+      }
+      await renderAll(); showToast(`🔄 ${name} pot tornar a jugar`, 'success');
+    } catch (e) { showToast('❌ Error: ' + e.message, 'error'); }
   }
 
-  document.getElementById('resetAllTeamsBtn').onclick = () => {
+  document.getElementById('resetAllTeamsBtn').onclick = async () => {
     if (!confirm('Reiniciar TOTS els equips?')) return;
-    setPlayed([]);
-    renderAll();
-    showToast('🔄 Tots els equips reiniciats', 'success');
+    try {
+      if (window.DB) await DB.resetAllTeams();
+      else localStorage.setItem('porraPlayedTeams', '[]');
+      await renderAll(); showToast('🔄 Tots els equips reiniciats', 'success');
+    } catch (e) { showToast('❌ Error: ' + e.message, 'error'); }
   };
 
   // ── CONFIG ACTIONS ────────────────────────────────────────────
-  document.getElementById('cfgResetTeams').onclick = () => {
+  document.getElementById('cfgResetTeams').onclick = async () => {
     if (!confirm('Reiniciar tots els equips jugats?')) return;
-    setPlayed([]);
-    renderAll();
-    showToast('🔄 Equips reiniciats', 'success');
+    try {
+      if (window.DB) await DB.resetAllTeams(); else localStorage.setItem('porraPlayedTeams', '[]');
+      await renderAll(); showToast('🔄 Equips reiniciats', 'success');
+    } catch (e) { showToast('❌ Error: ' + e.message, 'error'); }
   };
-
-  document.getElementById('cfgClearMatches').onclick = () => {
+  document.getElementById('cfgClearMatches').onclick = async () => {
     if (!confirm('Esborrar TOTS els partits?')) return;
-    setMatches([]);
-    // Keep played teams as-is
-    renderAll();
-    showToast('🗑️ Partits esborrats', 'success');
+    try {
+      if (window.DB) await DB.clearAllMatches(); else localStorage.setItem('porraMatches', '[]');
+      await renderAll(); showToast('🗑️ Partits esborrats', 'success');
+    } catch (e) { showToast('❌ Error: ' + e.message, 'error'); }
   };
-
-  document.getElementById('cfgResetAll').onclick = () => {
-    if (!confirm('⚠️ Reiniciar TOT el torneig? Aquesta acció no es pot desfer.')) return;
-    setMatches([]);
-    setPlayed([]);
-    renderAll();
-    showToast('💥 Torneig reiniciat completament', 'success');
+  document.getElementById('cfgResetAll').onclick = async () => {
+    if (!confirm('⚠️ Reiniciar TOT el torneig?')) return;
+    try {
+      if (window.DB) await DB.resetAll();
+      else { localStorage.setItem('porraMatches', '[]'); localStorage.setItem('porraPlayedTeams', '[]'); }
+      await renderAll(); showToast('💥 Torneig reiniciat', 'success');
+    } catch (e) { showToast('❌ Error: ' + e.message, 'error'); }
   };
 
   // ── TOAST ─────────────────────────────────────────────────────

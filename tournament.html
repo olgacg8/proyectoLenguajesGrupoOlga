@@ -7,6 +7,8 @@
   <meta name="description" content="Classificació del torneig de Chapas del Mundial 2026. Consulta la taula de punts i tots els partits jugats." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="firebase-config.js"></script>
+  <script src="db.js"></script>
   <style>
     :root {
       --dark: #070c18;
@@ -209,10 +211,12 @@
       <span class="hd-icon">🏆</span>
       <div>
         <div class="hd-title">Classificació <span>Chapas 2026</span></div>
-        <div class="last-update" id="lastUpdate">Actualitzant...</div>
+        <div class="last-update" id="lastUpdate">Carregant...</div>
       </div>
     </div>
     <div class="hd-links">
+      <span id="onlineBadge" style="font-size:0.72rem;padding:5px 10px;border-radius:99px;border:1px solid rgba(74,222,128,0.3);background:rgba(74,222,128,0.08);color:#4ade80"></span>
+      <button onclick="render()" class="hd-link" style="cursor:pointer">🔄 Refrescar</button>
       <a href="game.html" class="hd-link">⚽ Jugar</a>
       <a href="tournament.html" class="hd-link active">🏆 Classificació</a>
       <a href="admin.html" class="hd-link">🔐 Admin</a>
@@ -269,11 +273,11 @@
   </main>
 
   <script>
-    const SK_MATCHES = 'porraMatches';
-
-    function loadMatches() {
-      try { return JSON.parse(localStorage.getItem(SK_MATCHES) || '[]'); }
-      catch { return []; }
+    async function loadMatches() {
+      try {
+        if (window.DB) return await DB.getMatches();
+      } catch (e) { console.warn('[Tournament] DB error:', e.message); }
+      try { return JSON.parse(localStorage.getItem('porraMatches') || '[]'); } catch { return []; }
     }
 
     function calcStandings(matches) {
@@ -306,9 +310,13 @@
       } catch { return iso; }
     }
 
-    function render() {
-      const matches = loadMatches();
+    async function render() {
+      const matches = await loadMatches();
       const standings = calcStandings(matches);
+
+      // Online badge
+      const badge = document.getElementById('onlineBadge');
+      if (badge) badge.textContent = window.ONLINE_MODE ? '🌐 Online' : '💾 Local';
 
       // Stats
       const totalGoals = matches.reduce((s, m) => s + m.score1 + m.score2, 0);
@@ -393,8 +401,8 @@
     }
 
     render();
-    // Auto-refresh every 15 seconds
-    setInterval(render, 15000);
+    // Auto-refresh: 10s if online, 30s if local
+    setInterval(render, window.ONLINE_MODE ? 10000 : 30000);
   </script>
 </body>
 </html>
